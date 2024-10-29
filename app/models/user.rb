@@ -11,6 +11,8 @@ class User < ApplicationRecord
   # Roles de usuario
   ROLES = %w[admin registered guest client]
 
+  validates :role, inclusion: { in: ROLES }, allow_nil: true
+
   # Métodos de conveniencia para verificar el rol
   def admin?
     role == 'admin'
