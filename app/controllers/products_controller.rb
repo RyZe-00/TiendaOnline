@@ -7,7 +7,10 @@ class ProductsController < ApplicationController
   end
 
   # GET /products/1 or /products/1.json
+  #def show
+  #end
   def show
+    @product = Product.find(params[:id])
   end
 
   # GET /products/new
@@ -22,7 +25,6 @@ class ProductsController < ApplicationController
   # POST /products or /products.json
   def create
     @product = Product.new(product_params)
-
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: "Product was successfully created." }
@@ -64,7 +66,12 @@ class ProductsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
+    #def product_params
+    #  params.require(:product).permit(:name, :description, :price, :stock)
+    #end
+
     def product_params
-      params.require(:product).permit(:name, :description, :price, :stock)
+      params.require(:product).permit(:name, :description, :price, :stock, category_ids: [])
     end
+
 end

@@ -14,6 +14,19 @@
     <%= product.price %>
   </p>
 
+    <p>
+    <strong>Categories:</strong>
+    <% if @product.categories.any? %>
+      <ul>
+        <% @product.categories.each do |category| %>
+          <li><%= category.name %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No categories assigned to this product.</p>
+    <% end %>
+  </p>
+
   <p>
     <strong>Stock:</strong>
     <%= product.stock %>
