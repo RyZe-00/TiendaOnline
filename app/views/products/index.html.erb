@@ -35,4 +35,14 @@
     <% end %>
 </div>
 
-<%= link_to "New product", new_product_path %>
+<div class="text-center mt-3">
+  <% if user_signed_in? && current_user.role == 'admin' %>
+    <%= link_to "Nuevo producto", new_product_path, class: 'btn btn-success' %>
+  <% end %>
+</div>
+
+<div>
+    <p> </p>
+</div>
+
+

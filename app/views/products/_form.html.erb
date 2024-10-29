@@ -12,38 +12,31 @@
     <% end %>
 
     <div class="mb-3 row justify-content-center align-items-center">
-      <div class="col-md-2">
-        <%= form.label :name, "Name:", class: "form-label" %>
-      </div>
-      <div class="col-md-8">
-        <%= form.text_field :name, class: "form-control form-control-sm", style: "max-width: 300px; margin: auto;" %>
+      <div class="col-md-8 text-center">
+        <%= form.label :name, "Nombre Producto:", class: "form-label me-2" %> <!-- Clase me-2 para un margen derecho ligero -->
+        <%= form.text_field :name, class: "form-control form-control-sm d-inline", style: "max-width: 200px;" %> <!-- d-inline para que el campo esté en línea con el label -->
       </div>
     </div>
 
     <div class="mb-3 row justify-content-center align-items-center">
-      <div class="col-md-2">
-        <%= form.label :description, "Description:", class: "form-label" %>
+      <div class="col-md-8 text-center">
+        <%= form.label :description, "Descripción:", class: "form-label me-2" %> <!-- Clase me-2 para un margen derecho ligero -->
+        <%= form.text_area :description, class: "form-control form-control-sm d-inline", style: "max-width: 200px;" %> <!-- Ajuste del ancho y altura -->
       </div>
-      <div class="col-md-8">
-        <%= form.text_area :description, class: "form-control form-control-sm", style: "max-width: 300px; margin: auto;" %>
+    </div>
+
+
+    <div class="mb-3 row justify-content-center align-items-center">
+      <div class="col-md-8 text-center">
+        <%= form.label :price, "Precio:", class: "form-label me-2" %> <!-- Clase me-2 para un margen derecho ligero -->
+        <%= form.text_field :price, class: "form-control form-control-sm d-inline", style: "max-width: 200px;" %> <!-- d-inline para que el campo esté en línea con el label -->
       </div>
     </div>
 
     <div class="mb-3 row justify-content-center align-items-center">
-      <div class="col-md-2">
-        <%= form.label :price, "Price:", class: "form-label" %>
-      </div>
-      <div class="col-md-8">
-        <%= form.text_field :price, class: "form-control form-control-sm", style: "max-width: 300px; margin: auto;" %>
-      </div>
-    </div>
-
-    <div class="mb-3 row justify-content-center align-items-center">
-      <div class="col-md-2">
-        <%= form.label :stock, "Stock:", class: "form-label" %>
-      </div>
-      <div class="col-md-8">
-        <%= form.number_field :stock, class: "form-control form-control-sm", style: "max-width: 300px; margin: auto;" %>
+      <div class="col-md-8 text-center">
+        <%= form.label :stock, "Stock:", class: "form-label me-2" %> <!-- Clase me-2 para un margen derecho ligero -->
+        <%= form.number_field :stock, class: "form-control form-control-sm d-inline", style: "max-width: 200px;" %> <!-- d-inline para que el campo esté en línea con el label -->
       </div>
     </div>
 
@@ -67,14 +60,10 @@
     </div>
 
     <div class="text-center">
-      <%= form.submit class: "btn btn-success mt-3" %>
+      <%= form.submit class: "btn btn-success mt-1" %>
     </div>
   <% end %>
 </div>
-
-
-
-
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {

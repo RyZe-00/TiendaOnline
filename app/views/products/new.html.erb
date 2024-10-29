@@ -1,9 +1,14 @@
-<h1>New product</h1>
-
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Nuevo producto</h1>
+</div>
 <%= render "form", product: @product %>
 
-<br>
+<div class="container mt-2">
+  <div class="text-center">
+    <%= link_to "Volver a productos", products_path, class: 'btn btn-secondary' %>
+  </div>
+</div>
 
 <div>
-  <%= link_to "Back to products", products_path %>
+  <h1>  </h1>
 </div>
