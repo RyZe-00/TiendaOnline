@@ -1,5 +1,12 @@
 <p style="color: green"><%= notice %></p>
 
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+
 <header>
     <nav>
         <ul style="list-style-type: none; padding: 0;">

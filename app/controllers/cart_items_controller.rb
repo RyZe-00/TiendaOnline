@@ -22,17 +22,19 @@ class CartItemsController < ApplicationController
   # POST /cart_items or /cart_items.json
   def create
     @cart_item = CartItem.new(cart_item_params)
+    @cart_item.user_id = current_user.id if user_signed_in?
 
     respond_to do |format|
       if @cart_item.save
-        format.html { redirect_to @cart_item, notice: "Cart item was successfully created." }
+        format.html { redirect_to cart_items_path, notice: "Producto añadido al carrito." }
         format.json { render :show, status: :created, location: @cart_item }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to products_path, alert: @cart_item.errors.full_messages.to_sentence } # Redirigir a la página de productos con el mensaje de error
         format.json { render json: @cart_item.errors, status: :unprocessable_entity }
       end
     end
   end
+
 
   # PATCH/PUT /cart_items/1 or /cart_items/1.json
   def update
@@ -67,4 +69,5 @@ class CartItemsController < ApplicationController
     def cart_item_params
       params.require(:cart_item).permit(:user_id, :product_id, :quantity)
     end
+
 end

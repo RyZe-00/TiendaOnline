@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :set_guest_user
   before_action :set_product, only: %i[ show edit update destroy ]
 
 
@@ -73,6 +74,11 @@ class ProductsController < ApplicationController
 
     def product_params
       params.require(:product).permit(:name, :description, :price, :stock, category_ids: [])
+    end
+
+    def set_guest_user
+      # Si el usuario no está firmado, se asigna el rol 'guest'
+      @current_user_role = user_signed_in? ? current_user.role : 'guest'
     end
 
 end
