@@ -10,10 +10,28 @@
         <%= button_to "Eliminar este producto", @product, method: :delete, class: 'btn btn-danger me-2', data: { confirm: "¿Estás seguro de que quieres eliminar este producto?" } %>
       <% end %>
     </div>
+
+    <% if user_signed_in? %>
+      <div class="mt-2 text-center">
+        <%= form_with(url: cart_items_path, method: :post, local: true) do |form| %>
+          <div class="input-group justify-content-center">
+            <%= form.label :quantity, "Cantidad:", class: "input-group-text" %>
+            <%= form.number_field :quantity, min: 1, value: 1, class: "form-control", style: "max-width: 100px;"  %>
+            <%= hidden_field_tag :product_id, @product.id %>
+            <%= form.submit "Añadir al carrito", class: "btn btn-success" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="mt-3">
+        <p>Inicia sesión para añadir productos a tu carrito.</p>
+      </div>
+    <% end %>
+
     <div class="mt-2">
       <%= link_to "Volver a productos", products_path, class: 'btn btn-secondary' %>
     </div>
+    
   </div>
 </div>
-
 
