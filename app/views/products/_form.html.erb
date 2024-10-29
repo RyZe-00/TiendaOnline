@@ -32,7 +32,12 @@
   </div>
 
   <div>
-    <%= label_tag :category_ids, "Seleccionar Categorías", style: "display: block" %>
+    <%= label_tag :new_category, "Añadir Nueva Categoría", style: "display: block" %>
+    <%= text_field_tag :new_category, "", placeholder: "Escribe una nueva categoría", class: "new-category-input" %>
+    <%= button_tag "Añadir Categoría", type: :button, id: "add-category-btn", class: "btn" %>
+  </div>
+
+  <div id="category_ids"> <!-- Este contenedor debe tener este ID -->
     <%= form.collection_check_boxes :category_ids, Category.all, :id, :name do |b| %>
       <div>
         <%= b.check_box %>
@@ -42,12 +47,61 @@
   </div>
 
   <div>
-    <%= form.label :new_category, "Add New Category" %>
-    <%= text_field_tag :new_category %>
-    <%= button_tag "Create Category", type: "button", id: "create-category-button" %>
-  </div>
-
-  <div>
     <%= form.submit %>
   </div>
 <% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Escucha el botón "Añadir Categoría"
+    document.getElementById("add-category-btn").addEventListener("click", function() {
+      const newCategoryInput = document.querySelector(".new-category-input");
+      const categoryName = newCategoryInput.value.trim();
+
+      if (categoryName) {
+        // Solicitud AJAX para crear una nueva categoría
+        fetch("/categories", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector("[name='csrf-token']").content
+          },
+          body: JSON.stringify({ category: { name: categoryName } })
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json(); // Devuelve la respuesta en formato JSON
+        })
+        .then(data => {
+          if (data && data.id) {
+            // Crea el nuevo elemento en la lista de categorías
+            const categoryCheckboxesContainer = document.querySelector("#category_ids"); // Asegúrate de que esto apunte a la parte correcta de tu HTML
+
+            // Crea un nuevo div para la nueva categoría
+            const newCheckboxDiv = document.createElement("div");
+            
+            const newCheckbox = document.createElement("input");
+            newCheckbox.type = "checkbox";
+            newCheckbox.id = `category_${data.id}`;
+            newCheckbox.value = data.id;
+            newCheckbox.name = "product[category_ids][]"; // Asegúrate de que esto sea correcto para que se envíe con el formulario
+
+            const newLabel = document.createElement("label");
+            newLabel.htmlFor = `category_${data.id}`;
+            newLabel.innerText = data.name;
+
+            // Agrega el nuevo checkbox y la etiqueta al div
+            newCheckboxDiv.appendChild(newCheckbox);
+            newCheckboxDiv.appendChild(newLabel);
+            categoryCheckboxesContainer.appendChild(newCheckboxDiv); // Añade la nueva categoría al contenedor de categorías
+
+            newCategoryInput.value = ""; // Limpia el campo de entrada
+          }
+        })
+        .catch(error => console.error("Error al crear la categoría:", error));
+      }
+    });
+  });
+</script>

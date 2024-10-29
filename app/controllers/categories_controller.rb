@@ -20,13 +20,25 @@ class CategoriesController < ApplicationController
   end
 
   # POST /categories or /categories.json
+  #def create
+  #  @category = Category.new(category_params)
+  #  respond_to do |format|
+  #    if @category.save
+  #      format.html { redirect_to @category, notice: "Category was successfully created." }
+  #      format.json { render :show, status: :created, location: @category }
+  #    else
+  #      format.html { render :new, status: :unprocessable_entity }
+  #      format.json { render json: @category.errors, status: :unprocessable_entity }
+  #    end
+  #  end
+  #end
+
   def create
     @category = Category.new(category_params)
-
     respond_to do |format|
       if @category.save
         format.html { redirect_to @category, notice: "Category was successfully created." }
-        format.json { render :show, status: :created, location: @category }
+        format.json { render json: @category, status: :created } # Asegúrate de que retorne JSON
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @category.errors, status: :unprocessable_entity }
@@ -64,6 +76,10 @@ class CategoriesController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
+    #def category_params
+    #  params.require(:category).permit(:name, :description)
+    #end
+
     def category_params
       params.require(:category).permit(:name, :description)
     end
