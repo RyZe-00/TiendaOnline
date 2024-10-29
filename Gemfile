@@ -5,6 +5,10 @@ ruby "2.7.4"
 
 gem 'devise'
 
+gem 'bootstrap', '~> 5.0'
+gem 'sassc-rails'
+#gem 'dartsass-sprockets'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.8", ">= 7.0.8.6"
 

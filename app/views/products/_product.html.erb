@@ -1,35 +1,34 @@
-<div id="<%= dom_id product %>">
-  <p>
-    <strong>Name:</strong>
-    <%= product.name %>
-  </p>
+<div id="<%= dom_id product %>" style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+  <h2 style="text-align: center; color: #333;"><%= product.name %></h2>
 
-  <p>
-    <strong>Description:</strong>
-    <%= product.description %>
-  </p>
+  <div style="margin: 20px 0;">
+    <strong>Descripción:</strong>
+    <p><%= product.description %></p>
+  </div>
 
-  <p>
-    <strong>Price:</strong>
-    <%= product.price %>
-  </p>
+  <div style="margin: 10px 0;">
+    <strong>Precio:</strong>
+    <p style="color: green; font-weight: bold;">$<%= product.price %></p>
+  </div>
 
-    <p>
-    <strong>Categories:</strong>
+  <div style="margin: 10px 0;">
+    <strong>Categorías:</strong>
     <% if @product.categories.any? %>
-      <ul>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
         <% @product.categories.each do |category| %>
-          <li><%= category.name %></li>
+          <div style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #e9e9e9; flex: 0 0 auto;">
+            <%= category.name %>
+          </div>
         <% end %>
-      </ul>
+      </div>
     <% else %>
-      <p>No categories assigned to this product.</p>
+      <p>No hay categorías asignadas a este producto.</p>
     <% end %>
-  </p>
+  </div>
 
-  <p>
+  <div style="margin: 10px 0;">
     <strong>Stock:</strong>
-    <%= product.stock %>
-  </p>
-
+    <p style="font-weight: bold;"><%= product.stock %></p>
+  </div>
 </div>
+

@@ -1,55 +1,80 @@
-<%= form_with(model: @product, local: true) do |form| %>
-  <% if @product.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
-
-      <ul>
-        <% @product.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.text_field :price %>
-  </div>
-
-  <div>
-    <%= form.label :stock, style: "display: block" %>
-    <%= form.number_field :stock %>
-  </div>
-
-  <div>
-    <%= label_tag :new_category, "Añadir Nueva Categoría", style: "display: block" %>
-    <%= text_field_tag :new_category, "", placeholder: "Escribe una nueva categoría", class: "new-category-input" %>
-    <%= button_tag "Añadir Categoría", type: :button, id: "add-category-btn", class: "btn" %>
-  </div>
-
-  <div id="category_ids"> <!-- Este contenedor debe tener este ID -->
-    <%= form.collection_check_boxes :category_ids, Category.all, :id, :name do |b| %>
-      <div>
-        <%= b.check_box %>
-        <%= b.label %>
+<div class="container mt-5">
+  <%= form_with(model: @product, local: true) do |form| %>
+    <% if @product.errors.any? %>
+      <div class="text-center" style="color: red">
+        <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+        <ul>
+          <% @product.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
       </div>
     <% end %>
-  </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    <div class="mb-3 row justify-content-center align-items-center">
+      <div class="col-md-2">
+        <%= form.label :name, "Name:", class: "form-label" %>
+      </div>
+      <div class="col-md-8">
+        <%= form.text_field :name, class: "form-control form-control-sm", style: "max-width: 300px; margin: auto;" %>
+      </div>
+    </div>
+
+    <div class="mb-3 row justify-content-center align-items-center">
+      <div class="col-md-2">
+        <%= form.label :description, "Description:", class: "form-label" %>
+      </div>
+      <div class="col-md-8">
+        <%= form.text_area :description, class: "form-control form-control-sm", style: "max-width: 300px; margin: auto;" %>
+      </div>
+    </div>
+
+    <div class="mb-3 row justify-content-center align-items-center">
+      <div class="col-md-2">
+        <%= form.label :price, "Price:", class: "form-label" %>
+      </div>
+      <div class="col-md-8">
+        <%= form.text_field :price, class: "form-control form-control-sm", style: "max-width: 300px; margin: auto;" %>
+      </div>
+    </div>
+
+    <div class="mb-3 row justify-content-center align-items-center">
+      <div class="col-md-2">
+        <%= form.label :stock, "Stock:", class: "form-label" %>
+      </div>
+      <div class="col-md-8">
+        <%= form.number_field :stock, class: "form-control form-control-sm", style: "max-width: 300px; margin: auto;" %>
+      </div>
+    </div>
+
+    <div class="mb-3 text-center">
+      <%= label_tag :new_category, "Añadir Nueva Categoría", style: "display: block" %>
+      <%= text_field_tag :new_category, "", placeholder: "Escribe una nueva categoría", class: "new-category-input form-control form-control-sm", style: "max-width: 300px; margin: auto;" %>
+      <%= button_tag "Añadir Categoría", type: :button, id: "add-category-btn", class: "btn btn-primary mt-2" %>
+    </div>
+
+    <div id="category_ids" class="text-center">
+      <div class="row justify-content-center">
+        <% Category.all.each do |category| %>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-2">
+            <div class="border rounded p-2 text-center">
+              <%= check_box_tag "product[category_ids][]", category.id, @product.category_ids.include?(category.id) %>
+              <%= label_tag "product_category_ids_#{category.id}", category.name, class: "form-check-label" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <%= form.submit class: "btn btn-success mt-3" %>
+    </div>
+  <% end %>
+</div>
+
+
+
+
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {

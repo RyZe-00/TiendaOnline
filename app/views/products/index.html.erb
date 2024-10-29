@@ -2,36 +2,37 @@
 
 <header>
     <nav>
-      <ul>
-        <% if user_signed_in? %>
-          <%= button_to 'Cerrar Sesion', destroy_user_session_path, method: :delete %>
-        <% else %>
-          <li><%= link_to 'Iniciar sesión', new_user_session_path %></li>
-        <% end %>
-      </ul>
+        <ul style="list-style-type: none; padding: 0;">
+            <li style="display: inline; margin-right: 10px;">
+                <div style="border: 1px solid #ccc; padding: 10px; display: inline-block;">
+                    <% if user_signed_in? %>
+                        <%= button_to 'Cerrar Sesion', destroy_user_session_path, method: :delete %>
+                    <% else %>
+                        <%= link_to 'Iniciar sesión', new_user_session_path, class: 'btn btn-secondary' %>
+                    <% end %>
+                </div>
+            </li>
+        </ul>
     </nav>
 </header>
 
-<h1>Bienvenido a nuestra tienda en línea</h1>
-<p>Explora nuestros productos:</p>
+<h1 style="text-align: center;">Bienvenido a nuestra tienda en línea</h1>
+<p style="text-align: center;">Explora nuestros productos:</p>
 
-<div class="products-list">
-  <% @products.each do |product| %>
-    <div class="product-card">
-      <h2><%= link_to product.name, product_path(product) %></h2>
-      <p><%= product.description.truncate(100) %></p>
-      <p><strong>Precio:</strong> $<%= product.price %></p>
+<div class="products-list" style="display: flex; flex-wrap: wrap; justify-content: center;">
+    <% @products.each do |product| %>
+        <div class="product-card" style="border: 1px solid #ccc; margin: 10px; padding: 10px; width: 200px; text-align: center;">
+            <h2><%= link_to product.name, product_path(product) %></h2>
+            <p><%= product.description.truncate(100) %></p>
+            <p><strong>Precio:</strong> $<%= product.price %></p>
 
-      <% if product.stock == 0 %> <!-- Verifica si el stock es cero -->
-        <p style="color: red;">Producto agotado</p> <!-- Mensaje si está agotado -->
-      <% else %>
-        <%= link_to 'Ver Detalles', product_path(product), class: 'btn btn-primary' %>
-      <% end %>
-    </div>
-  <% end %>
+            <% if product.stock == 0 %>
+                <p style="color: red;">Producto agotado</p>
+            <% else %>
+                <%= link_to 'Ver Detalles', product_path(product), class: 'btn btn-primary' %>
+            <% end %>
+        </div>
+    <% end %>
 </div>
 
-<h1> </h1>
-
 <%= link_to "New product", new_product_path %>
-
