@@ -2,6 +2,43 @@ require "test_helper"
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @admin_user = users(:admin)
+    sign_in @admin_user
+  end
+
+  test "debe crear un producto" do
+    assert_difference('Product.count', 1) do
+      post products_url, params: {
+        product: {
+          name: "Nuevo Producto",
+          description: "Descripción del producto",
+          price: 99.99,
+          stock: 10,
+          category_id: categories(:example_category).id
+        }
+      }
+    end
+    assert_redirected_to product_path(Product.last)
+  end
+
+  test "no debe crear producto sin nombre" do
+    assert_no_difference('Product.count') do
+      post products_url, params: {
+        product: {
+          name: "", # Nombre vacío
+          description: "Descripción",
+          price: 50.0,
+          stock: 5,
+          category_id: categories(:example_category).id
+        }
+      }
+    end
+    assert_response :unprocessable_entity
+  end
+end
+
+class ProductsControllerTest < ActionDispatch::IntegrationTest
+  setup do
     @product = products(:one)
   end
 

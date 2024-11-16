@@ -7,6 +7,9 @@ gem 'devise'
 
 gem 'bootstrap', '~> 5.0'
 gem 'sassc-rails'
+gem 'jquery-rails'
+gem 'tailwindcss-rails'
+
 #gem 'dartsass-sprockets'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"

@@ -1,0 +1,11 @@
+// Vaciar el contenido del carrito en el modal
+$('#cart-items-list').empty(); 
+
+// Mostrar los artículos actuales en el carrito
+<% @cart_items.each do |item| %>
+  $('#cart-items-list').append('<p><strong><%= j item.product.name %></strong> - Cantidad: <%= j item.quantity %></p>');
+  $('#cart-items-list').append('<p>Precio total del producto: <%= j number_to_currency(item.product.price * item.quantity) %></p>');
+<% end %>
+
+// Calcular y mostrar el total del carrito
+$('#cart-items-list').append('<p><strong>Total del carrito: <%= j number_to_currency(@cart_total) %></strong></p>');

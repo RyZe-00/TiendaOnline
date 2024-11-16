@@ -4,6 +4,9 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  resources :cart_items, only: [:create, :destroy] # o el método que uses para gestionar el carrito
+  get 'cart', to: 'cart_items#index', as: 'cart' # Asegúrate de tener la ruta para mostrar el carrito
+
 
   root 'products#index'
 

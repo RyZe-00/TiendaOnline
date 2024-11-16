@@ -13,6 +13,8 @@ class ProductsController < ApplicationController
   #end
   def show
     @product = Product.find(params[:id])
+    # Asegúrate de que se carga el carrito del usuario actual
+    @cart_items = CartItem.where(user_id: current_user.id) if user_signed_in?
   end
 
   # GET /products/new

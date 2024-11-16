@@ -6,14 +6,33 @@
   <div class="text-center">
     <div class="btn-group" role="group">
       <% if user_signed_in? && current_user.role == 'admin' %>
-        <%= link_to "Editar este producto", edit_product_path(@product), class: 'btn btn-warning me-2' %>
-        <%= button_to "Eliminar este producto", @product, method: :delete, class: 'btn btn-danger me-2', data: { confirm: "¿Estás seguro de que quieres eliminar este producto?" } %>
+        <%= button_to edit_product_path(@product), method: :get, class: 'editBtn', form: { class: 'd-inline' } do %>
+          <svg height="1em" viewBox="0 0 512 512">
+            <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z" />
+          </svg>
+        <% end %>
+
+
+        <%= button_to @product, method: :delete, class: 'button', data: { confirm: "¿Estás seguro de que quieres eliminar este producto?" } do %>
+          <span class="button__text">Eliminar</span>
+          <span class="button__icon">
+            <svg class="svg" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg">
+              <path d="M112,112l20,320c.95,18.49,14.4,32,32,32H348c17.67,0,30.87-13.51,32-32l20-320" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></path>
+              <line style="stroke:#fff;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px" x1="80" x2="432" y1="112" y2="112"></line>
+              <path d="M192,112V72h0a23.93,23.93,0,0,1,24-24h80a23.93,23.93,0,0,1,24,24h0v40" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></path>
+              <line style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px" x1="256" x2="256" y1="176" y2="400"></line>
+              <line style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px" x1="184" x2="192" y1="176" y2="400"></line>
+              <line style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px" x1="328" x2="320" y1="176" y2="400"></line>
+            </svg>
+          </span>
+        <% end %>
+
       <% end %>
     </div>
 
     <% if user_signed_in? && (current_user.role == 'customer' || current_user.role == 'guest' || current_user.role == 'registered') %>
       <div class="mt-2 text-center">
-        <%= form_with(model: CartItem.new, url: cart_items_path, local: true) do |form| %>
+        <%= form_with(model: CartItem.new, url: cart_items_path, local: true, remote: true, id: 'add-to-cart-form') do |form| %>
           <div class="input-group justify-content-center">
             <%= form.label :quantity, "Cantidad:", class: "input-group-text" %>
             <%= form.number_field :quantity, min: 1, value: 1, class: "form-control", style: "max-width: 80px;" %>
@@ -22,6 +41,7 @@
             <%= form.submit "Añadir al carrito", class: "btn btn-success" %>
           </div>
         <% end %>
+        <div id="error-message" class="mt-2 text-danger"></div>
       </div>
     <% else %>
       <div class="mt-3">
@@ -29,11 +49,81 @@
       </div>
     <% end %>
 
-
     <div class="mt-2">
-      <%= link_to "Volver a productos", products_path, class: 'btn btn-secondary' %>
+      <%= link_to products_path, class: 'bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group inline-flex items-center justify-center' do %>
+        <div class="bg-green-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1024 1024"
+            height="25px"
+            width="25px"
+          >
+            <path
+              d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
+              fill="#000000"
+            ></path>
+            <path
+              d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
+              fill="#000000"
+            ></path>
+          </svg>
+        </div>
+        <p class="translate-x-2">Volver</p>
+      <% end %>
     </div>
-    
+
   </div>
 </div>
 
+<!-- Botón para abrir el modal del carrito -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal">
+  Ver Carrito
+</button>
+
+<!-- Modal Carrito-->
+<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cartModalLabel">Carrito de Compras</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Aquí se mostrarán los artículos del carrito -->
+        <div id="cart-items-list">
+          <% if @cart_items.present? %>
+            <% @cart_items.each do |item| %>
+              <p><strong><%= item.product.name %></strong> - Cantidad: <%= item.quantity %></p>
+              <p>Precio total del producto: <%= number_to_currency(item.product.price * item.quantity) %></p>
+            <% end %>
+          <% else %>
+            <p>No hay artículos en el carrito.</p>
+          <% end %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <%= link_to 'Ir a pagar', cart_path, class: 'btn btn-primary' %> <!-- Asegúrate de que cart_path esté definido -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById('add-to-cart-form');
+    
+    form.addEventListener('ajax:success', function(event) {
+      const [data, status, xhr] = event.detail;
+
+      // Ya no necesitas hacer nada aquí, ya que el archivo `create.js.erb` se encargará de la actualización.
+      // Si has implementado `create.js.erb`, simplemente asegúrate de que su contenido es el correcto.
+    });
+
+    form.addEventListener('ajax:error', function(event) {
+      const [data, status, xhr] = event.detail;
+      const errorMessage = document.getElementById('error-message');
+      errorMessage.textContent = data.error || "Error al añadir el producto. Verifica la cantidad o el stock.";
+    });
+  });
+</script>
